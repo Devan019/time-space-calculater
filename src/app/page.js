@@ -15,15 +15,17 @@ export default function Home() {
     if (!first) {
       const obj = {
         inputCode: inputCode,
-        convertType: "javascript"
+        convertType: "javascript",
       };
       async function main() {
         try {
-          const response = await axios.post("/api/convert", obj);
+          let response = await axios.post("/api/prompts", obj);
+          console.log(response.data)
           let strippedCode = response.data.replace(/\/\/.*|\/\*[\s\S]*?\*\//g, '').trim();
           strippedCode = strippedCode.replace('javascript', '');
           strippedCode = strippedCode.replace(/```|'''/g, '').trim();
           setConvertedCode(strippedCode);
+          
           const obj2 = {
             code: strippedCode
           }
